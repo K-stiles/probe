@@ -72,7 +72,7 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
 
           {/* Delete Task Option */}
           <DropdownMenuItem
-            className="!text-destructive cursor-pointer"
+            className="text-destructive! cursor-pointer"
             onClick={() => setOpenDialog(true)}
           >
             Delete Task
