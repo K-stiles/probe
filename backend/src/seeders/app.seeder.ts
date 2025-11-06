@@ -301,6 +301,14 @@ const seedApp = async () => {
       wsOwner.currentWorkspace = workspace._id as mongoose.Types.ObjectId;
       await wsOwner.save({ session });
 
+      // Add workspace owner as a member with OWNER role
+      const wsOwnerMember = new MemberModel({
+        userId: wsOwner._id,
+        workspaceId: workspace._id,
+        role: roleDocs["OWNER"]._id,
+      });
+      await wsOwnerMember.save({ session });
+
       for (const projSeed of wsSeed.projects) {
         // Project owner
         const projectOwner = await createUser(projSeed.owner.name, projSeed.owner.email);
