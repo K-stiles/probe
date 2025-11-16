@@ -7,10 +7,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import RecentProjects from "@/components/workspace/project/recent-projects";
 import RecentTasks from "@/components/workspace/task/recent-tasks";
 import RecentMembers from "@/components/workspace/member/recent-members";
+import { ChartAreaInteractive } from "@/components/charts/chart-area-interactive";
+
 const WorkspaceDashboard = () => {
   const { onOpen } = useCreateProjectDialog();
   return (
-    <main className="flex flex-1 flex-col py-4 md:pt-3">
+    <main className="flex flex-1 flex-col py-4 md:pt-3 space-y-4">
       <div className="flex items-center justify-between space-y-2 mb-6">
         <div>
           <h2 className="text-2xl font-bold tracking-tight">
@@ -25,11 +27,16 @@ const WorkspaceDashboard = () => {
           New Project
         </Button>
       </div>
+
       <WorkspaceAnalytics />
+
+      <ChartAreaInteractive />
+
+      {/* Tabs Tables */}
       <div className="mt-4">
         <Tabs defaultValue="projects" className="w-full border rounded-lg p-2">
-          <TabsList className="w-full justify-start border-0 bg-gray-50 px-1 h-12">
-            <TabsTrigger className="py-2" value="projects">
+          <TabsList className="w-full justify-start border-0  px-1 h-12">
+            <TabsTrigger value="projects" className={"py-2"}>
               Recent Projects
             </TabsTrigger>
             <TabsTrigger className="py-2" value="tasks">

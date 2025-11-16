@@ -69,8 +69,8 @@ const InviteUser = () => {
                 Hey there! You're invited to join a Probe Workspace!
               </CardTitle>
               <CardDescription>
-                Looks like you need to be logged into your Probe account to
-                join this Workspace.
+                Looks like you need to be logged into your Probe account to join
+                this Workspace.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -81,11 +81,7 @@ const InviteUser = () => {
                   {user ? (
                     <div className="flex items-center justify-center my-3">
                       <form onSubmit={handleSubmit}>
-                        <Button
-                          type="submit"
-                          disabled={isLoading}
-                          className="bg-green-500! text-white! text-[23px] h-auto!"
-                        >
+                        <Button type="submit" disabled={isLoading}>
                           {isLoading && (
                             <Loader className="w-6! h-6! animate-spin" />
                           )}

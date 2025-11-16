@@ -104,9 +104,23 @@ const Asidebar = () => {
                     align="start"
                     sideOffset={4}
                   >
-                    <DropdownMenuGroup></DropdownMenuGroup>
+                    <DropdownMenuGroup>
+                      <DropdownMenuItem className="pointer-events-none">
+                        <div className="grid flex-1 text-left text-sm leading-tight">
+                          <span className="truncate font-semibold">
+                            {user?.name}
+                          </span>
+                          <span className="truncate text-xs">
+                            {user?.email}
+                          </span>
+                        </div>
+                      </DropdownMenuItem>
+                    </DropdownMenuGroup>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={() => setIsOpen(true)}>
+                    <DropdownMenuItem
+                      onClick={() => setIsOpen(true)}
+                      className="focus:bg-red-600 focus:text-red-100 cursor-pointer"
+                    >
                       <LogOut />
                       Log out
                     </DropdownMenuItem>

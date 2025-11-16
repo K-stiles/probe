@@ -121,31 +121,38 @@ const workspaces: WorkspaceSeed[] = [
           },
           {
             title: "Create FAQ section",
-            description: "Design and implement comprehensive FAQ page with search functionality.",
+            description:
+              "Design and implement comprehensive FAQ page with search functionality.",
           },
           {
             title: "Set up CDN integration",
-            description: "Configure content delivery network for global performance.",
+            description:
+              "Configure content delivery network for global performance.",
           },
           {
             title: "Implement live chat widget",
-            description: "Add customer support chat functionality to all pages.",
+            description:
+              "Add customer support chat functionality to all pages.",
           },
           {
             title: "Create product showcase gallery",
-            description: "Build interactive gallery to display product features.",
+            description:
+              "Build interactive gallery to display product features.",
           },
           {
             title: "Add customer testimonials section",
-            description: "Design and implement testimonials carousel with ratings.",
+            description:
+              "Design and implement testimonials carousel with ratings.",
           },
           {
             title: "Set up A/B testing framework",
-            description: "Implement testing infrastructure for homepage variations.",
+            description:
+              "Implement testing infrastructure for homepage variations.",
           },
           {
             title: "Create blog section layout",
-            description: "Design responsive blog layout with category filtering.",
+            description:
+              "Design responsive blog layout with category filtering.",
           },
           {
             title: "Implement search functionality",
@@ -222,7 +229,8 @@ const workspaces: WorkspaceSeed[] = [
           },
           {
             title: "Create welcome email series",
-            description: "Design automated welcome sequence for new subscribers.",
+            description:
+              "Design automated welcome sequence for new subscribers.",
           },
           {
             title: "Set up email list segmentation",
@@ -258,7 +266,118 @@ const workspaces: WorkspaceSeed[] = [
           },
           {
             title: "Set up email compliance checks",
-            description: "Ensure all emails meet GDPR and CAN-SPAM requirements.",
+            description:
+              "Ensure all emails meet GDPR and CAN-SPAM requirements.",
+          },
+        ],
+      },
+      {
+        name: "Tech Startup App Development",
+        emoji: "🚀",
+        owner: {
+          name: "David Wilson",
+          email: "david.wilson@orion.example.com",
+        },
+        members: [
+          { name: "Jake Thompson", email: "jake.thompson@orion.example.com" },
+          { name: "Emma Davis", email: "emma.davis@orion.example.com" },
+          { name: "Ryan Foster", email: "ryan.foster@orion.example.com" },
+          { name: "Luna Rodriguez", email: "luna.rodriguez@orion.example.com" },
+          { name: "Alex Morgan", email: "alex.morgan@orion.example.com" },
+        ],
+        tasks: [
+          {
+            title: "Implement onboarding flow",
+            description: "Add new guided onboarding for first-time users.",
+          },
+          {
+            title: "Improve sync reliability",
+            description: "Fix intermittent sync failures and add retries.",
+          },
+          {
+            title: "Add dark mode support",
+            description: "Implement dark theme option throughout the app.",
+          },
+          {
+            title: "Optimize database queries",
+            description: "Reduce query time for user data fetching.",
+          },
+          {
+            title: "Implement push notifications",
+            description: "Add real-time notification system for updates.",
+          },
+          {
+            title: "Build offline mode",
+            description: "Enable core app functionality without internet.",
+          },
+          {
+            title: "Add biometric authentication",
+            description: "Support Face ID and fingerprint login.",
+          },
+          {
+            title: "Create widget extensions",
+            description: "Build home screen widgets for quick access.",
+          },
+          {
+            title: "Implement file sharing",
+            description: "Allow users to share documents within the app.",
+          },
+          {
+            title: "Add advanced search",
+            description: "Build powerful search with filters and sorting.",
+          },
+        ],
+      },
+      {
+        name: "Marketing Analytics Dashboard",
+        emoji: "🎮",
+        owner: {
+          name: "Rachel Martinez",
+          email: "rachel.martinez@orion.example.com",
+        },
+        members: [
+          { name: "Oliver Chen", email: "oliver.chen@orion.example.com" },
+          { name: "Sophie Turner", email: "sophie.turner@orion.example.com" },
+          { name: "Diego Mendes", email: "diego.mendes@orion.example.com" },
+          { name: "Zara Khan", email: "zara.khan@orion.example.com" },
+          { name: "Max Schmidt", email: "max.schmidt@orion.example.com" },
+        ],
+        tasks: [
+          {
+            title: "Define campaign goals",
+            description: "Outline top-level visibility objectives for Q1.",
+          },
+          {
+            title: "Create brand video",
+            description: "Produce a 30-second brand awareness video.",
+          },
+          {
+            title: "Launch social ads",
+            description: "Run paid ads across Meta and TikTok.",
+          },
+          {
+            title: "Keyword research",
+            description: "Identify high-intent keywords for core products.",
+          },
+          {
+            title: "Optimize landing pages",
+            description: "Improve headings, metadata and alt tags.",
+          },
+          {
+            title: "Backlink outreach",
+            description: "Contact partners for new backlink opportunities.",
+          },
+          {
+            title: "Prepare launch assets",
+            description: "Design product banners and feature cards.",
+          },
+          {
+            title: "Coordinate PR outreach",
+            description: "Send press kits to selected journalists.",
+          },
+          {
+            title: "Launch landing page",
+            description: "Publish optimized landing page for launch.",
           },
         ],
       },
@@ -332,7 +451,8 @@ const workspaces: WorkspaceSeed[] = [
           },
           {
             title: "Add social login integration",
-            description: "Implement Google, Facebook, and Apple sign-in options.",
+            description:
+              "Implement Google, Facebook, and Apple sign-in options.",
           },
           {
             title: "Create app performance monitoring",
@@ -450,19 +570,23 @@ const workspaces: WorkspaceSeed[] = [
           },
           {
             title: "Add data annotation features",
-            description: "Allow users to add notes and comments to data points.",
+            description:
+              "Allow users to add notes and comments to data points.",
           },
           {
             title: "Create dashboard templates",
-            description: "Build pre-configured dashboard templates for common use cases.",
+            description:
+              "Build pre-configured dashboard templates for common use cases.",
           },
           {
             title: "Implement data quality monitoring",
-            description: "Add system to monitor and alert on data quality issues.",
+            description:
+              "Add system to monitor and alert on data quality issues.",
           },
           {
             title: "Set up cache optimization",
-            description: "Implement intelligent caching for faster dashboard loading.",
+            description:
+              "Implement intelligent caching for faster dashboard loading.",
           },
         ],
       },
@@ -617,8 +741,12 @@ const seedApp = async () => {
             const taskTemplate = taskPool[taskIndex];
 
             // Randomly assign status and priority for variation
-            let randomStatus = statusOptions[Math.floor(Math.random() * statusOptions.length)];
-            const randomPriority = priorityOptions[Math.floor(Math.random() * priorityOptions.length)];
+            let randomStatus =
+              statusOptions[Math.floor(Math.random() * statusOptions.length)];
+            const randomPriority =
+              priorityOptions[
+                Math.floor(Math.random() * priorityOptions.length)
+              ];
 
             // Set due date for some tasks (about 70% of tasks)
             const shouldHaveDueDate = Math.random() < 0.7;
@@ -639,7 +767,10 @@ const seedApp = async () => {
                   TaskStatusEnum.IN_PROGRESS,
                   TaskStatusEnum.IN_REVIEW,
                 ];
-                randomStatus = overdueStatuses[Math.floor(Math.random() * overdueStatuses.length)];
+                randomStatus =
+                  overdueStatuses[
+                    Math.floor(Math.random() * overdueStatuses.length)
+                  ];
               } else {
                 // Create future due dates between 1-30 days from now
                 const daysFromNow = Math.floor(Math.random() * 30) + 1;

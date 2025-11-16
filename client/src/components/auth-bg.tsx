@@ -1,26 +1,24 @@
 import { ReactNode } from "react";
 
-export const AuthBackground = ({ children }: { children: ReactNode }) => (
-  <div className="min-h-screen w-full  relative grid-animated-container">
-    <BgPattern />
-    <div className="relative z-10">{children}</div>
-  </div>
-);
-
-export const BgPattern = () => (
+export const BgPattern = ({children}:{children: ReactNode}) => (
+<div className="min-h-screen w-full bg-[#fff7ed] relative">
   <div
     className="absolute inset-0 z-0"
     style={{
       backgroundImage: `
-        linear-gradient(90deg, rgba(16,185,129,0.25) 1px, transparent 0),
-        linear-gradient(180deg, rgba(16,185,129,0.25) 1px, transparent 0),
-        repeating-linear-gradient(45deg, rgba(16,185,129,0.2) 0 2px, transparent 2px 6px)
+        linear-gradient(180deg,
+          rgba(255,247,237,1) 0%,
+          rgba(255,237,213,0.8) 25%,
+          rgba(254,215,170,0.6) 50%,
+          rgba(251,146,60,0.4) 75%,
+          rgba(249,115,22,0.3) 100%
+        ),
+        radial-gradient(circle at 20% 80%, rgba(255,255,255,0.6) 0%, transparent 40%),
+        radial-gradient(circle at 80% 20%, rgba(254,215,170,0.5) 0%, transparent 50%),
+        radial-gradient(circle at 60% 60%, rgba(252,165,165,0.3) 0%, transparent 45%)
       `,
-      backgroundSize: "24px 24px, 24px 24px, 24px 24px",
-      WebkitMask:
-        "radial-gradient(circle at var(--x, 50%) var(--y, 50%), black 0, transparent 30%)",
-      mask: "radial-gradient(circle at var(--x, 50%) var(--y, 50%), black 0, transparent 30%)",
-      animation: "spotlight 8s ease-in-out infinite",
     }}
   />
-);
+  <div className="relative z-10">{children}</div>
+</div>
+)
