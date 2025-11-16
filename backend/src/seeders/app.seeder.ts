@@ -11,6 +11,7 @@ import AccountModel from "../models/account.model";
 import { RolePermissions } from "../utils/role-permission";
 import { RoleType } from "../enums/role.enum";
 import { ProviderEnum } from "../enums/account-provider.enum";
+import { TaskStatusEnum, TaskPriorityEnum } from "../enums/task.enum";
 
 /**
  * App seeder
@@ -20,7 +21,7 @@ import { ProviderEnum } from "../enums/account-provider.enum";
  * - Each member has 2 unique tasks assigned on that project
  */
 
-// Define proper types for our seed data
+// TYPES
 interface TaskTemplate {
   title: string;
   description: string;
@@ -48,185 +49,426 @@ interface WorkspaceSeed {
   projects: ProjectSeed[];
 }
 
-
-    // Seed data arrays: realistic human names, project names and task templates
-    const workspaces: WorkspaceSeed[] = [
+// Seed data arrays of WorkspaceSeed
+const workspaces: WorkspaceSeed[] = [
+  {
+    workspaceInfo: {
+      name: "Orion Marketing",
+      description: "Marketing team workspace for Orion Corporation",
+    },
+    owner: { name: "Ethan Miller", email: "ethan.miller@orion.example.com" },
+    projects: [
       {
-        workspaceInfo: {
-          name: "Orion Marketing",
-          description: "Marketing team workspace for Orion Corporation",
+        name: "Website Redesign",
+        emoji: "🎨",
+        owner: {
+          name: "Alice Johnson",
+          email: "alice.johnson@orion.example.com",
         },
-        owner: { name: "Ethan Miller", email: "ethan.miller@orion.example.com" },
-        projects: [
+        members: [
+          { name: "Tom Hale", email: "tom.hale@orion.example.com" },
+          { name: "Priya Singh", email: "priya.singh@orion.example.com" },
+          { name: "Marco Alvarez", email: "marco.alvarez@orion.example.com" },
+          { name: "Yuki Nakamura", email: "yuki.nakamura@orion.example.com" },
+          { name: "Sara O'Neil", email: "sara.oneil@orion.example.com" },
+        ],
+        tasks: [
           {
-            name: "Website Redesign",
-            emoji: "🎨",
-            owner: { name: "Alice Johnson", email: "alice.johnson@orion.example.com" },
-            members: [
-              { name: "Tom Hale", email: "tom.hale@orion.example.com" },
-              { name: "Priya Singh", email: "priya.singh@orion.example.com" },
-              { name: "Marco Alvarez", email: "marco.alvarez@orion.example.com" },
-              { name: "Yuki Nakamura", email: "yuki.nakamura@orion.example.com" },
-              { name: "Sara O'Neil", email: "sara.oneil@orion.example.com" },
-            ],
-            tasks: [
-              {
-                title: "Create high-fidelity homepage mockups",
-                description: "Design polished mockups for the homepage and hero section.",
-              },
-              {
-                title: "Write homepage copy",
-                description: "Draft concise, benefit-driven copy for the homepage.",
-              },
-              {
-                title: "Conduct user research interviews",
-                description: "Interview 5 target users to validate design assumptions.",
-              },
-              {
-                title: "Optimize mobile responsiveness",
-                description: "Ensure all page elements work perfectly on mobile devices.",
-              },
-              {
-                title: "Implement accessibility features",
-                description: "Add ARIA labels and keyboard navigation support.",
-              },
-              {
-                title: "Set up analytics tracking",
-                description: "Configure Google Analytics and conversion tracking.",
-              },
-              {
-                title: "Create brand style guide",
-                description: "Document colors, fonts, and visual guidelines.",
-              },
-              {
-                title: "Test cross-browser compatibility",
-                description: "Verify site works correctly across Chrome, Firefox, Safari.",
-              },
-              {
-                title: "Build contact form backend",
-                description: "Implement server-side form processing and validation.",
-              },
-              {
-                title: "Optimize page load speeds",
-                description: "Compress images and minimize CSS/JS for faster loading.",
-              },
-            ],
+            title: "Create high-fidelity homepage mockups",
+            description:
+              "Design polished mockups for the homepage and hero section.",
           },
           {
-            name: "Q4 Email Campaign",
-            emoji: "✉️",
-            owner: { name: "Brian Lee", email: "brian.lee@orion.example.com" },
-            members: [
-              { name: "Lina Gomez", email: "lina.gomez@orion.example.com" },
-              { name: "Omar Farouk", email: "omar.farouk@orion.example.com" },
-              { name: "Hannah Park", email: "hannah.park@orion.example.com" },
-              { name: "Daniel Kim", email: "daniel.kim@orion.example.com" },
-              { name: "Maya Patel", email: "maya.patel@orion.example.com" },
-            ],
-            tasks: [
-              {
-                title: "Draft campaign schedule",
-                description: "Create a send schedule and segmentation plan for Q4 emails.",
-              },
-              {
-                title: "Write email templates",
-                description: "Develop subject lines and body templates for promotional emails.",
-              },
-              {
-                title: "Design email graphics",
-                description: "Create compelling visual assets for email headers and CTAs.",
-              },
-              {
-                title: "Set up email automation flows",
-                description: "Configure drip sequences for new subscribers.",
-              },
-              {
-                title: "A/B test subject lines",
-                description: "Run tests on subject line variations to improve open rates.",
-              },
-              {
-                title: "Segment customer database",
-                description: "Create targeted segments based on purchase history.",
-              },
-              {
-                title: "Write newsletter content",
-                description: "Draft engaging content for monthly newsletter editions.",
-              },
-              {
-                title: "Configure tracking pixels",
-                description: "Set up email open and click tracking for analytics.",
-              },
-              {
-                title: "Create unsubscribe flow",
-                description: "Design smooth unsubscribe experience and preference center.",
-              },
-              {
-                title: "Test email deliverability",
-                description: "Check spam scores and inbox placement across providers.",
-              },
-            ],
+            title: "Write homepage copy",
+            description: "Draft concise, benefit-driven copy for the homepage.",
+          },
+          {
+            title: "Conduct user research interviews",
+            description:
+              "Interview 5 target users to validate design assumptions.",
+          },
+          {
+            title: "Optimize mobile responsiveness",
+            description:
+              "Ensure all page elements work perfectly on mobile devices.",
+          },
+          {
+            title: "Implement accessibility features",
+            description: "Add ARIA labels and keyboard navigation support.",
+          },
+          {
+            title: "Set up analytics tracking",
+            description: "Configure Google Analytics and conversion tracking.",
+          },
+          {
+            title: "Create brand style guide",
+            description: "Document colors, fonts, and visual guidelines.",
+          },
+          {
+            title: "Test cross-browser compatibility",
+            description:
+              "Verify site works correctly across Chrome, Firefox, Safari.",
+          },
+          {
+            title: "Build contact form backend",
+            description:
+              "Implement server-side form processing and validation.",
+          },
+          {
+            title: "Optimize page load speeds",
+            description:
+              "Compress images and minimize CSS/JS for faster loading.",
+          },
+          {
+            title: "Create FAQ section",
+            description: "Design and implement comprehensive FAQ page with search functionality.",
+          },
+          {
+            title: "Set up CDN integration",
+            description: "Configure content delivery network for global performance.",
+          },
+          {
+            title: "Implement live chat widget",
+            description: "Add customer support chat functionality to all pages.",
+          },
+          {
+            title: "Create product showcase gallery",
+            description: "Build interactive gallery to display product features.",
+          },
+          {
+            title: "Add customer testimonials section",
+            description: "Design and implement testimonials carousel with ratings.",
+          },
+          {
+            title: "Set up A/B testing framework",
+            description: "Implement testing infrastructure for homepage variations.",
+          },
+          {
+            title: "Create blog section layout",
+            description: "Design responsive blog layout with category filtering.",
+          },
+          {
+            title: "Implement search functionality",
+            description: "Add site-wide search with autocomplete and filters.",
+          },
+          {
+            title: "Set up social media integration",
+            description: "Add social sharing buttons and feed integration.",
+          },
+          {
+            title: "Create pricing calculator tool",
+            description: "Build interactive pricing calculator for services.",
           },
         ],
       },
       {
-        workspaceInfo: {
-          name: "Pioneer Product",
-          description: "Product development workspace for Pioneer Labs",
-        },
-        owner: { name: "Olivia Brown", email: "olivia.brown@pioneer.example.com" },
-        projects: [
+        name: "Q4 Email Campaign",
+        emoji: "✉️",
+        owner: { name: "Brian Lee", email: "brian.lee@orion.example.com" },
+        members: [
+          { name: "Lina Gomez", email: "lina.gomez@orion.example.com" },
+          { name: "Omar Farouk", email: "omar.farouk@orion.example.com" },
+          { name: "Hannah Park", email: "hannah.park@orion.example.com" },
+          { name: "Daniel Kim", email: "daniel.kim@orion.example.com" },
+          { name: "Maya Patel", email: "maya.patel@orion.example.com" },
+        ],
+        tasks: [
           {
-            name: "Mobile App v2",
-            emoji: "📱",
-            owner: { name: "Noah Wilson", email: "noah.wilson@pioneer.example.com" },
-            members: [
-              { name: "Grace Liu", email: "grace.liu@pioneer.example.com" },
-              { name: "Evan Turner", email: "evan.turner@pioneer.example.com" },
-              { name: "Carlos Mendes", email: "carlos.mendes@pioneer.example.com" },
-              { name: "Aisha Khan", email: "aisha.khan@pioneer.example.com" },
-              { name: "Felix Schmidt", email: "felix.schmidt@pioneer.example.com" },
-            ],
-            tasks: [
-              { title: "Implement onboarding flow", description: "Add new guided onboarding for first-time users." },
-              { title: "Improve sync reliability", description: "Fix intermittent sync failures and add retries." },
-              { title: "Add dark mode support", description: "Implement dark theme option throughout the app." },
-              { title: "Optimize database queries", description: "Reduce query time for user data fetching." },
-              { title: "Implement push notifications", description: "Add real-time notification system for updates." },
-              { title: "Build offline mode", description: "Enable core app functionality without internet." },
-              { title: "Add biometric authentication", description: "Support Face ID and fingerprint login." },
-              { title: "Create widget extensions", description: "Build home screen widgets for quick access." },
-              { title: "Implement file sharing", description: "Allow users to share documents within the app." },
-              { title: "Add advanced search", description: "Build powerful search with filters and sorting." },
-            ],
+            title: "Draft campaign schedule",
+            description:
+              "Create a send schedule and segmentation plan for Q4 emails.",
           },
           {
-            name: "Analytics Dashboard",
-            emoji: "📊",
-            owner: { name: "Sophia Martinez", email: "sophia.martinez@pioneer.example.com" },
-            members: [
-              { name: "Liam O'Connor", email: "liam.oconnor@pioneer.example.com" },
-              { name: "Zoe Chen", email: "zoe.chen@pioneer.example.com" },
-              { name: "Marcus Reed", email: "marcus.reed@pioneer.example.com" },
-              { name: "Anika Rao", email: "anika.rao@pioneer.example.com" },
-              { name: "Peter Novak", email: "peter.novak@pioneer.example.com" },
-            ],
-            tasks: [
-              { title: "Define KPIs", description: "Agree on primary KPIs to display in the dashboard." },
-              { title: "Build charts prototype", description: "Prototype charts for session, retention and conversions." },
-              { title: "Implement real-time updates", description: "Add live data streaming to dashboard charts." },
-              { title: "Create export functionality", description: "Allow users to export reports as PDF/CSV." },
-              { title: "Add custom date ranges", description: "Enable flexible date picker for time-based analysis." },
-              { title: "Build user segmentation", description: "Create cohort analysis and user grouping features." },
-              { title: "Implement data alerts", description: "Set up automated alerts for anomalies in metrics." },
-              { title: "Add drill-down capabilities", description: "Enable users to explore data in deeper detail." },
-              { title: "Create mobile dashboard", description: "Optimize dashboard layout for mobile devices." },
-              { title: "Set up automated reports", description: "Schedule weekly/monthly reports via email." },
-            ],
+            title: "Write email templates",
+            description:
+              "Develop subject lines and body templates for promotional emails.",
+          },
+          {
+            title: "Design email graphics",
+            description:
+              "Create compelling visual assets for email headers and CTAs.",
+          },
+          {
+            title: "Set up email automation flows",
+            description: "Configure drip sequences for new subscribers.",
+          },
+          {
+            title: "A/B test subject lines",
+            description:
+              "Run tests on subject line variations to improve open rates.",
+          },
+          {
+            title: "Segment customer database",
+            description: "Create targeted segments based on purchase history.",
+          },
+          {
+            title: "Write newsletter content",
+            description:
+              "Draft engaging content for monthly newsletter editions.",
+          },
+          {
+            title: "Configure tracking pixels",
+            description: "Set up email open and click tracking for analytics.",
+          },
+          {
+            title: "Create unsubscribe flow",
+            description:
+              "Design smooth unsubscribe experience and preference center.",
+          },
+          {
+            title: "Test email deliverability",
+            description:
+              "Check spam scores and inbox placement across providers.",
+          },
+          {
+            title: "Create welcome email series",
+            description: "Design automated welcome sequence for new subscribers.",
+          },
+          {
+            title: "Set up email list segmentation",
+            description: "Create dynamic segments based on user behavior.",
+          },
+          {
+            title: "Design mobile email templates",
+            description: "Optimize email layouts for mobile devices.",
+          },
+          {
+            title: "Implement email personalization",
+            description: "Add dynamic content based on user preferences.",
+          },
+          {
+            title: "Create re-engagement campaign",
+            description: "Design campaign to win back inactive subscribers.",
+          },
+          {
+            title: "Set up email performance dashboard",
+            description: "Build analytics dashboard for campaign metrics.",
+          },
+          {
+            title: "Test email client compatibility",
+            description: "Ensure emails render correctly across email clients.",
+          },
+          {
+            title: "Create holiday campaign templates",
+            description: "Design seasonal email templates for holidays.",
+          },
+          {
+            title: "Implement email scheduling system",
+            description: "Build system for optimal send time scheduling.",
+          },
+          {
+            title: "Set up email compliance checks",
+            description: "Ensure all emails meet GDPR and CAN-SPAM requirements.",
           },
         ],
       },
-    ];
-
+    ],
+  },
+  {
+    workspaceInfo: {
+      name: "Pioneer Product",
+      description: "Product development workspace for Pioneer Labs",
+    },
+    owner: { name: "Olivia Brown", email: "olivia.brown@pioneer.example.com" },
+    projects: [
+      {
+        name: "Mobile App v2",
+        emoji: "📱",
+        owner: {
+          name: "Noah Wilson",
+          email: "noah.wilson@pioneer.example.com",
+        },
+        members: [
+          { name: "Grace Liu", email: "grace.liu@pioneer.example.com" },
+          { name: "Evan Turner", email: "evan.turner@pioneer.example.com" },
+          { name: "Carlos Mendes", email: "carlos.mendes@pioneer.example.com" },
+          { name: "Aisha Khan", email: "aisha.khan@pioneer.example.com" },
+          { name: "Felix Schmidt", email: "felix.schmidt@pioneer.example.com" },
+        ],
+        tasks: [
+          {
+            title: "Implement onboarding flow",
+            description: "Add new guided onboarding for first-time users.",
+          },
+          {
+            title: "Improve sync reliability",
+            description: "Fix intermittent sync failures and add retries.",
+          },
+          {
+            title: "Add dark mode support",
+            description: "Implement dark theme option throughout the app.",
+          },
+          {
+            title: "Optimize database queries",
+            description: "Reduce query time for user data fetching.",
+          },
+          {
+            title: "Implement push notifications",
+            description: "Add real-time notification system for updates.",
+          },
+          {
+            title: "Build offline mode",
+            description: "Enable core app functionality without internet.",
+          },
+          {
+            title: "Add biometric authentication",
+            description: "Support Face ID and fingerprint login.",
+          },
+          {
+            title: "Create widget extensions",
+            description: "Build home screen widgets for quick access.",
+          },
+          {
+            title: "Implement file sharing",
+            description: "Allow users to share documents within the app.",
+          },
+          {
+            title: "Add advanced search",
+            description: "Build powerful search with filters and sorting.",
+          },
+          {
+            title: "Implement user onboarding tutorial",
+            description: "Create interactive tutorial for new users.",
+          },
+          {
+            title: "Add social login integration",
+            description: "Implement Google, Facebook, and Apple sign-in options.",
+          },
+          {
+            title: "Create app performance monitoring",
+            description: "Set up crash reporting and performance tracking.",
+          },
+          {
+            title: "Implement data backup system",
+            description: "Create automatic cloud backup for user data.",
+          },
+          {
+            title: "Add multi-language support",
+            description: "Implement internationalization for global users.",
+          },
+          {
+            title: "Create app store optimization",
+            description: "Optimize app store listings and screenshots.",
+          },
+          {
+            title: "Implement in-app purchases",
+            description: "Add premium features with subscription model.",
+          },
+          {
+            title: "Add voice commands feature",
+            description: "Implement voice control for hands-free operation.",
+          },
+          {
+            title: "Create user feedback system",
+            description: "Build in-app feedback collection and rating system.",
+          },
+          {
+            title: "Implement progressive web app",
+            description: "Add PWA capabilities for web version.",
+          },
+        ],
+      },
+      {
+        name: "Analytics Dashboard",
+        emoji: "📊",
+        owner: {
+          name: "Sophia Martinez",
+          email: "sophia.martinez@pioneer.example.com",
+        },
+        members: [
+          { name: "Liam O'Connor", email: "liam.oconnor@pioneer.example.com" },
+          { name: "Zoe Chen", email: "zoe.chen@pioneer.example.com" },
+          { name: "Marcus Reed", email: "marcus.reed@pioneer.example.com" },
+          { name: "Anika Rao", email: "anika.rao@pioneer.example.com" },
+          { name: "Peter Novak", email: "peter.novak@pioneer.example.com" },
+        ],
+        tasks: [
+          {
+            title: "Define KPIs",
+            description: "Agree on primary KPIs to display in the dashboard.",
+          },
+          {
+            title: "Build charts prototype",
+            description:
+              "Prototype charts for session, retention and conversions.",
+          },
+          {
+            title: "Implement real-time updates",
+            description: "Add live data streaming to dashboard charts.",
+          },
+          {
+            title: "Create export functionality",
+            description: "Allow users to export reports as PDF/CSV.",
+          },
+          {
+            title: "Add custom date ranges",
+            description: "Enable flexible date picker for time-based analysis.",
+          },
+          {
+            title: "Build user segmentation",
+            description: "Create cohort analysis and user grouping features.",
+          },
+          {
+            title: "Implement data alerts",
+            description: "Set up automated alerts for anomalies in metrics.",
+          },
+          {
+            title: "Add drill-down capabilities",
+            description: "Enable users to explore data in deeper detail.",
+          },
+          {
+            title: "Create mobile dashboard",
+            description: "Optimize dashboard layout for mobile devices.",
+          },
+          {
+            title: "Set up automated reports",
+            description: "Schedule weekly/monthly reports via email.",
+          },
+          {
+            title: "Create data visualization library",
+            description: "Build reusable chart components for analytics.",
+          },
+          {
+            title: "Implement real-time collaboration",
+            description: "Add collaborative features for dashboard editing.",
+          },
+          {
+            title: "Add data filtering capabilities",
+            description: "Create advanced filtering system for datasets.",
+          },
+          {
+            title: "Set up data warehouse integration",
+            description: "Connect dashboard to enterprise data warehouse.",
+          },
+          {
+            title: "Create custom widget builder",
+            description: "Allow users to create custom dashboard widgets.",
+          },
+          {
+            title: "Implement role-based access control",
+            description: "Add permissions system for dashboard access.",
+          },
+          {
+            title: "Add data annotation features",
+            description: "Allow users to add notes and comments to data points.",
+          },
+          {
+            title: "Create dashboard templates",
+            description: "Build pre-configured dashboard templates for common use cases.",
+          },
+          {
+            title: "Implement data quality monitoring",
+            description: "Add system to monitor and alert on data quality issues.",
+          },
+          {
+            title: "Set up cache optimization",
+            description: "Implement intelligent caching for faster dashboard loading.",
+          },
+        ],
+      },
+    ],
+  },
+];
 
 const seedApp = async () => {
   console.log("App seeding started...");
@@ -249,10 +491,15 @@ const seedApp = async () => {
     await UserModel.deleteMany({}, { session });
 
     // Ensure roles exist (create if missing)
-    const roleDocs: Record<RoleType, RoleDocument> = {} as Record<RoleType, RoleDocument>;
+    const roleDocs: Record<RoleType, RoleDocument> = {} as Record<
+      RoleType,
+      RoleDocument
+    >;
     for (const roleName in RolePermissions) {
       const roleKey = roleName as keyof typeof RolePermissions;
-      let roleDoc = await RoleModel.findOne({ name: roleKey }).session(session).exec();
+      let roleDoc = await RoleModel.findOne({ name: roleKey })
+        .session(session)
+        .exec();
 
       if (!roleDoc) {
         const created = new RoleModel({
@@ -311,7 +558,10 @@ const seedApp = async () => {
 
       for (const projSeed of wsSeed.projects) {
         // Project owner
-        const projectOwner = await createUser(projSeed.owner.name, projSeed.owner.email);
+        const projectOwner = await createUser(
+          projSeed.owner.name,
+          projSeed.owner.email
+        );
 
         const project = new ProjectModel({
           name: projSeed.name,
@@ -334,6 +584,20 @@ const seedApp = async () => {
         const taskPool = [...projSeed.tasks]; // Copy task pool
         let taskIndex = 0;
 
+        // Define arrays for random assignment of status and priority
+        const statusOptions = [
+          TaskStatusEnum.BACKLOG,
+          TaskStatusEnum.TODO,
+          TaskStatusEnum.IN_PROGRESS,
+          TaskStatusEnum.IN_REVIEW,
+          TaskStatusEnum.DONE,
+        ];
+        const priorityOptions = [
+          TaskPriorityEnum.LOW,
+          TaskPriorityEnum.MEDIUM,
+          TaskPriorityEnum.HIGH,
+        ];
+
         for (const memberSeed of projSeed.members) {
           const memUser = await createUser(memberSeed.name, memberSeed.email);
 
@@ -351,13 +615,49 @@ const seedApp = async () => {
             }
 
             const taskTemplate = taskPool[taskIndex];
+
+            // Randomly assign status and priority for variation
+            let randomStatus = statusOptions[Math.floor(Math.random() * statusOptions.length)];
+            const randomPriority = priorityOptions[Math.floor(Math.random() * priorityOptions.length)];
+
+            // Set due date for some tasks (about 70% of tasks)
+            const shouldHaveDueDate = Math.random() < 0.7;
+            let dueDate = null;
+            const isOverdue = Math.random() < 0.25; // 25% chance of being overdue
+
+            if (shouldHaveDueDate) {
+              if (isOverdue) {
+                // Create overdue tasks (1-14 days past due)
+                const daysPastDue = Math.floor(Math.random() * 14) + 1;
+                dueDate = new Date();
+                dueDate.setDate(dueDate.getDate() - daysPastDue);
+
+                // Overdue tasks should not be DONE - adjust status if needed
+                const overdueStatuses = [
+                  TaskStatusEnum.BACKLOG,
+                  TaskStatusEnum.TODO,
+                  TaskStatusEnum.IN_PROGRESS,
+                  TaskStatusEnum.IN_REVIEW,
+                ];
+                randomStatus = overdueStatuses[Math.floor(Math.random() * overdueStatuses.length)];
+              } else {
+                // Create future due dates between 1-30 days from now
+                const daysFromNow = Math.floor(Math.random() * 30) + 1;
+                dueDate = new Date();
+                dueDate.setDate(dueDate.getDate() + daysFromNow);
+              }
+            }
+
             const task = new TaskModel({
               title: `${taskTemplate.title} (${memUser.name})`,
               description: taskTemplate.description,
               project: project._id,
               workspace: workspace._id,
+              status: randomStatus,
+              priority: randomPriority,
               assignedTo: memUser._id,
               createdBy: projectOwner._id,
+              dueDate: dueDate,
             });
             await task.save({ session });
             taskIndex++;
@@ -394,10 +694,10 @@ const seedApp = async () => {
 
 seedApp()
   .then(() => {
-    console.log("App seed script finished.");
+    console.log("👍App seed script finished.");
     process.exit(0);
   })
   .catch((error) => {
-    console.error("Unhandled error running app seed:", error);
+    console.error("❌Unhandled error running app seed:", error);
     process.exit(1);
   });

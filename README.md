@@ -1,124 +1,343 @@
-# 🌟 Advanced MERN B2B Teams Project Management SaaS - *Probe*
+# 🚀 Probe
 
-## 🎥 Watch the Full Video on YouTube
-**[Subscribe to the Channel](https://tinyurl.com/subcribe-to-techwithEmma)** to stay updated with more exciting projects and tutorials!
+**Advanced B2B Teams Project Management SaaS Platform**
 
----
-
-## ❤️ Support the Channel
-If you love this project and want to see more, consider supporting the channel:
-- Give this repository a ⭐️ on GitHub.
-- **[Buy Me a Coffee](https://www.buymeacoffee.com/techwithemmaofficial)** to help fund more educational content.
-- Like, share, and subscribe to the channel for more tutorials and updates!
+Probe is a comprehensive project management solution designed for modern teams. Streamline your workflow with intuitive task management, role-based permissions, and collaborative workspaces - all in one powerful platform.
 
 ---
 
-## 📌 Project Overview
+## 📋 Table of Contents
 
-Welcome to **Probe**, a powerful and scalable multi-tenancy project management system built with **Node.js**, **MongoDB**, and **React**. Designed for real-world B2B needs, this project delivers features like Google Sign-In, workspace management, project tracking, task collaboration, role-based permissions, and more. Perfect for developers aiming to create SaaS-based team collaboration platforms.
-
----
-
-## 🌟 Key Features
-
-- 🔐 **Authentication** (Google Sign-In, Email, Password)
-- 🏢 **Create & Manage Multiple Workspaces**
-- 📊 **Projects & Epics Management**
-- ✅ **Tasks** (CRUD, Status, Priority, Assignee)
-- 👥 **Roles & Permissions** (Owner, Admin, Member)
-- ✉️ **Invite Members to Workspaces**
-- 🔍 **Filters & Search** (Status, Priority, AssignedTo)
-- 📈 **Analytics Dashboard**
-- 📅 **Pagination & Load More**
-- 🔒 **Cookie Session Management**
-- 🚪 **Logout & Session Termination**
-- 🌱 **Seeding** for Test Data
-- 💾 **Mongoose Transactions** for Robust Data Integrity
-- 🌐 **Built with MERN Stack** (Node.js, MongoDB, React, TypeScript)
+- [Tech Stack](#-tech-stack)
+- [Key Features](#-key-features)
+- [Getting Started](#-getting-started)
+- [Project Structure](#-project-structure)
+- [API Endpoints](#-api-endpoints)
+- [Contributing](#-contributing)
+- [License](#-license)
 
 ---
 
-## 🚀 Tools & Technologies
+## 🛠️ Tech Stack
 
-This project leverages the latest tools and frameworks for modern development:
+### **Frontend**
+![React](https://img.shields.io/badge/React-18.3.1-61DAFB?style=flat&logo=react&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.6.2-3178C6?style=flat&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-6.0.5-646CFF?style=flat&logo=vite&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4.1.16-06B6D4?style=flat&logo=tailwindcss&logoColor=white)
 
-- **Node.js**: Scalable backend architecture
-- **React.js**: Dynamic frontend framework
-- **MongoDB & Mongoose**: Flexible and scalable database solutions
-- **Google OAuth**: Seamless Google Sign-In integration
-- **TypeScript**: For a type-safe codebase
-- **TailwindCSS & Shadcn UI**: Beautiful, responsive design
-- **Vite.js**: Lightning-fast frontend development
+- **React 18.3.1** - Modern UI library with hooks
+- **TypeScript** - Type-safe JavaScript development
+- **Vite** - Lightning-fast build tool and dev server
+- **TailwindCSS 4.1.16** - Utility-first CSS framework
+- **Radix UI** - Accessible component primitives
+- **React Query (TanStack)** - Server state management
+- **React Router Dom 7.1.1** - Client-side routing
+- **React Hook Form** - Performant form handling
+- **Zustand** - Lightweight state management
+- **Zod** - Schema validation
+- **Lucide React** - Beautiful icon library
+
+### **Backend**
+![Node.js](https://img.shields.io/badge/Node.js-Latest-339933?style=flat&logo=node.js&logoColor=white)
+![Express](https://img.shields.io/badge/Express-4.21.2-000000?style=flat&logo=express&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-Latest-47A248?style=flat&logo=mongodb&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.7.2-3178C6?style=flat&logo=typescript&logoColor=white)
+
+- **Node.js & Express 4.21.2** - Server runtime and web framework
+- **TypeScript 5.7.2** - Type-safe backend development
+- **MongoDB & Mongoose 8.9.2** - NoSQL database with ODM
+- **Passport.js** - Authentication middleware
+- **Google OAuth 2.0** - Social authentication
+- **Bcrypt** - Password hashing
+- **Zod** - Runtime type validation
+- **UUID** - Unique identifier generation
+
+### **Other Tools**
+![ESLint](https://img.shields.io/badge/ESLint-Latest-4B32C3?style=flat&logo=eslint&logoColor=white)
+![PostCSS](https://img.shields.io/badge/PostCSS-8.4.49-DD3A0A?style=flat&logo=postcss&logoColor=white)
+
+- **ESLint** - Code linting and formatting
+- **PostCSS** - CSS processing
+- **ts-node-dev** - TypeScript development server
+- **CORS** - Cross-origin resource sharing
 
 ---
 
-## 🔄 Getting Started
+## ✨ Key Features
 
-### 1. Watch the Video
-Follow along step-by-step by watching the full guide on YouTube.
+### 🏢 **Multi-Workspace Management**
+- Create and manage multiple workspaces for different teams or projects
+- Role-based access control (Owner, Admin, Member)
+- Invite team members via unique workspace codes
 
-### 2. Set Up Environment Variables
+### 📊 **Advanced Project Organization**
+- Create projects within workspaces with custom emojis
+- Project-specific task management and analytics
+- Hierarchical organization for complex workflows
 
-Create a `.env` file in the root of your project and configure these variables:
+### ✅ **Comprehensive Task Management**
+- Create, edit, and delete tasks with detailed descriptions
+- Task status tracking (Backlog, Todo, In Progress, In Review, Done)
+- Priority levels (Low, Medium, High)
+- Due date management and overdue tracking
+- Assign tasks to team members
 
-```plaintext
-PORT=8000
-NODE_ENV=development
-MONGO_URI="mongodb+srv://<username>:<password>@<>.mongodb.net/teamsync_db"
+### 🔐 **Robust Authentication & Security**
+- Local authentication with secure password hashing
+- Google OAuth 2.0 integration
+- Session-based authentication with configurable expiration
+- Protected routes with role-based permissions
 
-SESSION_SECRET="session_secret_key"
+### 👥 **Team Collaboration**
+- Member role management with granular permissions
+- Real-time workspace analytics
+- Team member profiles and activity tracking
 
-GOOGLE_CLIENT_ID=<your-google-client-id>
-GOOGLE_CLIENT_SECRET=<your-google-client-secret>
-GOOGLE_CALLBACK_URL=http://localhost:8000/api/auth/google/callback
+### 📈 **Analytics & Insights**
+- Workspace-level analytics dashboard
+- Task completion tracking
+- Overdue task monitoring
+- Project progress visualization
 
-FRONTEND_ORIGIN=http://localhost:3000
-FRONTEND_GOOGLE_CALLBACK_URL=http://localhost:3000/google/callback
+### 🎨 **Modern User Experience**
+- Responsive design for all devices
+- Dark/light theme support (via Radix UI)
+- Accessible components following WCAG guidelines
+- Smooth animations and transitions
+
+---
+
+## 🚀 Getting Started
+
+### **Prerequisites**
+
+Before running this application, ensure you have the following installed:
+
+- **Node.js** (v18.0.0 or higher)
+- **npm** or **yarn** package manager
+- **MongoDB** (local installation or MongoDB Atlas account)
+- **Git** for version control
+
+### **Installation**
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd probe-advanced-b2b-teams-project-management-saas
+   ```
+
+2. **Install Backend Dependencies**
+   ```bash
+   cd backend
+   npm install
+   ```
+
+3. **Install Frontend Dependencies**
+   ```bash
+   cd ../client
+   npm install
+   ```
+
+### **Configuration**
+
+#### **Backend Environment Setup**
+
+1. Create `.env` file in the `backend` directory:
+   ```bash
+   cd backend
+   cp .env.example .env
+   ```
+
+2. Configure your environment variables in `backend/.env`:
+   ```env
+   PORT=8000
+   NODE_ENV=development
+
+   # MongoDB Configuration
+   MONGO_URI="mongodb+srv://<username>:<password>@<cluster>.mongodb.net/probe_db"
+
+   # Session Configuration
+   SESSION_SECRET="your_super_secret_session_key_here"
+   SESSION_EXPIRES_IN="1d"
+
+   # Google OAuth (Optional)
+   GOOGLE_CLIENT_ID=your_google_client_id
+   GOOGLE_CLIENT_SECRET=your_google_client_secret
+   GOOGLE_CALLBACK_URL=http://localhost:8000/api/auth/google/callback
+
+   # Frontend Configuration
+   FRONTEND_ORIGIN=http://localhost:3000
+   FRONTEND_GOOGLE_CALLBACK_URL=http://localhost:3000/google/callback
+   ```
+
+#### **Frontend Environment Setup**
+
+1. Create `.env` file in the `client` directory:
+   ```bash
+   cd client
+   cp .env.example .env
+   ```
+
+2. Configure your environment variables in `client/.env`:
+   ```env
+   VITE_API_BASE_URL="http://localhost:8000/api"
+   ```
+
+### **Database Setup**
+
+1. **Initialize the database with roles (optional):**
+   ```bash
+   cd backend
+   npm run pre-seed
+   ```
+
+2. **Seed sample data(required):**
+   ```bash
+   npm run seed
+   ```
+
+### **Running the Application**
+
+#### **Development Mode**
+
+1. **Start the Backend Server:**
+   ```bash
+   cd backend
+   npm run dev
+   ```
+   Server will run on `http://localhost:8000`
+
+2. **Start the Frontend Development Server:**
+   ```bash
+   cd client
+   npm run dev
+   ```
+   Client will run on `http://localhost:5173`
+
+#### **Production Mode**
+
+1. **Build and Start Backend:**
+   ```bash
+   cd backend
+   npm run build
+   npm start
+   ```
+
+2. **Build Frontend:**
+   ```bash
+   cd client
+   npm run build
+   npm run preview
+   ```
+
+---
+
+## 📁 Project Structure
+
+```
+probe-advanced-b2b-teams-project-management-saas/
+├── backend/
+│   ├── src/
+│   │   ├── config/           # App configuration
+│   │   ├── controllers/      # Route controllers
+│   │   ├── enums/           # TypeScript enums
+│   │   ├── middlewares/     # Express middlewares
+│   │   ├── models/          # MongoDB models
+│   │   ├── routes/          # API routes
+│   │   ├── services/        # Business logic
+│   │   ├── utils/           # Utility functions
+│   │   ├── validation/      # Zod schemas
+│   │   └── seeders/         # Database seeders
+│   ├── package.json
+│   └── tsconfig.json
+├── client/
+│   ├── src/
+│   │   ├── components/      # React components
+│   │   ├── hooks/           # Custom hooks
+│   │   ├── lib/             # Utility libraries
+│   │   ├── pages/           # Page components
+│   │   ├── types/           # TypeScript types
+│   │   └── context/         # React contexts
+│   ├── package.json
+│   └── vite.config.ts
+└── README.md
 ```
 
-### 3. Run the Application
+---
 
-Install dependencies and start the development server:
+## 🔗 API Endpoints
 
-```bash
-npm install
-npm run dev
-```
+### **Authentication**
+- `POST /api/auth/register` - User registration
+- `GET /api/auth/google` - Google OAuth login
+- `GET /api/auth/google/callback` - Google OAuth callback
+- `POST /api/auth/logout` - User logout
 
-Access the backend at `http://localhost:8000`.
+### **Workspaces**
+- `POST /api/workspace/create/new` - Create workspace
+- `GET /api/workspace/all` - Get user workspaces
+- `GET /api/workspace/:id` - Get workspace details
+- `PUT /api/workspace/update/:id` - Update workspace
+- `DELETE /api/workspace/delete/:id` - Delete workspace
+- `GET /api/workspace/members/:id` - Get workspace members
+- `GET /api/workspace/analytics/:id` - Get workspace analytics
+
+### **Projects**
+- `POST /api/project/workspace/:workspaceId/create` - Create project
+- `GET /api/project/workspace/:workspaceId/all` - Get workspace projects
+- `GET /api/project/:projectId/workspace/:workspaceId` - Get project details
+- `PUT /api/project/:projectId/workspace/:workspaceId/update` - Update project
+- `DELETE /api/project/:projectId/workspace/:workspaceId/delete` - Delete project
+
+### **Tasks**
+- `POST /api/task/project/:projectId/workspace/:workspaceId/create` - Create task
+- `GET /api/task/workspace/:workspaceId/all` - Get workspace tasks
+- `GET /api/task/:id/project/:projectId/workspace/:workspaceId` - Get task details
+- `PUT /api/task/:id/project/:projectId/workspace/:workspaceId/update` - Update task
+- `DELETE /api/task/:id/workspace/:workspaceId/delete` - Delete task
+
+### **Members**
+- `POST /api/member/join` - Join workspace via invite
+- `PUT /api/workspace/change/member/role/:id` - Change member role
 
 ---
 
-## 🌐 Deploying Probe
+## 🤝 Contributing
 
-### 1. Add Environment Variables
-Add the `.env` variables to your hosting platform (e.g., Vercel).
+We welcome contributions to Probe! Please follow these steps:
 
-### 2. Deploy
-Deploy your app using your preferred method to make it live.
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
----
+### **Development Guidelines**
 
-## 📚 Comprehensive Guide
-
-**🚀 Deepen Your Understanding!**
-We’ve developed an all-encompassing guide for this project that explains:
-
-- The architecture and design principles behind Probe
-- Step-by-step breakdowns of each feature
-- Advanced techniques for implementing seeding, Mongoose transactions, and performance optimizations
-- Insights into multi-tenancy and role-based permission models
-- Best practices for building scalable SaaS applications
-
-This guide ensures you gain a thorough understanding of every concept and feature in Probe, empowering you to build similar systems or expand upon this project.
-
-**💡 Ready to learn more?** Check out the full guide now—**[link in the description!](#)**
+- Follow TypeScript best practices
+- Use meaningful commit messages
+- Add tests for new features
+- Update documentation as needed
+- Follow the existing code style
 
 ---
 
-### 📺 Like, Share & Subscribe
+## 📄 License
 
-Don’t miss out! **[Subscribe to the Channel](https://tinyurl.com/subcribe-to-techwithEmma)** for more amazing content and exciting projects.
+This project is licensed under the ISC License. See the [LICENSE](LICENSE) file for details.
 
-Now, let’s dive into the demo of **Probe**! 🚀
+---
 
+## 👨‍💻 Author
+
+**Micheal Essuman**
+
+For questions, suggestions, or support, please reach out to michealessuman08@gmail.com.
+
+---
+
+<div align="center">
+  <p>Built with ❤️ using modern web technologies</p>
+  <p>⭐ Star this repository if you find it helpful!</p>
+</div>
