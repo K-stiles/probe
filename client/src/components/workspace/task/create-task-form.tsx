@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { format } from "date-fns";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { CalendarIcon, Loader } from "lucide-react";
@@ -18,15 +17,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+// Popover replaced by inline calendar fallback in DueDatePicker
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "../../ui/textarea";
-import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
 import {
   getAvatarColor,
@@ -41,6 +35,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { createTaskMutationFn } from "@/lib/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
+import { useState, useEffect, useRef } from "react";
 
 export default function CreateTaskForm(props: {
   projectId?: string;
@@ -207,7 +202,7 @@ export default function CreateTaskForm(props: {
                     <FormControl>
                       <Input
                         placeholder="Website Redesign"
-                        className="h-[48px]!"
+                        className="h-12!"
                         {...field}
                       />
                     </FormControl>
@@ -338,42 +333,7 @@ export default function CreateTaskForm(props: {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Due Date</FormLabel>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant={"outline"}
-                            className={cn(
-                              "w-full flex-1 pl-3 text-left font-normal",
-                              !field.value && "text-muted-foreground"
-                            )}
-                          >
-                            {field.value ? (
-                              format(field.value, "PPP")
-                            ) : (
-                              <span>Pick a date</span>
-                            )}
-                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          mode="single"
-                          selected={field.value}
-                          onSelect={field.onChange}
-                          disabled={
-                            (date) =>
-                              date <
-                                new Date(new Date().setHours(0, 0, 0, 0)) || // Disable past dates
-                              date > new Date("2100-12-31") //Prevent selection beyond a far future date
-                          }
-                          initialFocus
-                          defaultMonth={new Date()}
-                          fromMonth={new Date()}
-                        />
-                      </PopoverContent>
-                    </Popover>
+                    <DueDatePicker {...field} />
                     <FormMessage />
                   </FormItem>
                 )}
@@ -455,7 +415,7 @@ export default function CreateTaskForm(props: {
             </div>
 
             <Button
-              className="flex place-self-end  h-[40px] text-white font-semibold"
+              className="flex place-self-end  h-10 text-white font-semibold"
               type="submit"
               disabled={isPending}
             >
@@ -467,4 +427,119 @@ export default function CreateTaskForm(props: {
       </div>
     </div>
   );
+}
+
+
+function formatDate(date: Date | undefined) {
+  if (!date) {
+    return ""
+  }
+
+  return date.toLocaleDateString("en-US", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  })
+}
+
+function isValidDate(date: Date | undefined) {
+  if (!date) {
+    return false
+  }
+  return !isNaN(date.getTime())
+}
+
+export function DueDatePicker(props: {
+  value?: Date | undefined
+  onChange: (date: Date | undefined) => void
+  name?: string
+}) {
+  const { value: propValue, onChange } = props
+
+  const [open, setOpen] = useState(false)
+  const [date, setDate] = useState<Date | undefined>(propValue)
+  const [month, setMonth] = useState<Date | undefined>(propValue)
+  const [value, setValue] = useState(formatDate(propValue))
+  const wrapperRef = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    setDate(propValue)
+    setMonth(propValue)
+    setValue(formatDate(propValue))
+  }, [propValue])
+
+  useEffect(() => {
+    function handleDocClick(e: MouseEvent) {
+      const target = e.target as Node
+      if (wrapperRef.current && !wrapperRef.current.contains(target)) {
+        setOpen(false)
+      }
+    }
+
+    document.addEventListener("mousedown", handleDocClick)
+    return () => document.removeEventListener("mousedown", handleDocClick)
+  }, [])
+
+  return (
+    <div className="flex flex-col gap-3">
+      <div className="relative flex gap-2">
+        <Input
+          id="date"
+          value={value}
+          placeholder="June 01, 2025"
+          className="bg-background pr-10"
+          onFocus={() => setOpen(true)}
+          onClick={() => setOpen(true)}
+          onChange={(e) => {
+            const d = new Date(e.target.value)
+            setValue(e.target.value)
+            if (isValidDate(d)) {
+              setDate(d)
+              setMonth(d)
+              onChange(d)
+            } else {
+              onChange(undefined)
+            }
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "ArrowDown") {
+              e.preventDefault()
+              setOpen(true)
+            }
+          }}
+        />
+        {/* Inline calendar fallback (avoids portal/stacking issues inside Dialog) */}
+        <div ref={wrapperRef} className="relative bg-muted">
+          <Button
+            id="date-picker"
+            type="button"
+            variant="ghost"
+            className="absolute top-1/2 right-4 size-6 -translate-y-1/2"
+            onClick={() => setOpen((v) => !v)}
+          >
+            <CalendarIcon className="size-3.5" />
+            <span className="sr-only">Select date</span>
+          </Button>
+
+          {open && (
+            <div className="absolute -right-62 -bottom-[10%] z-50 w-auto overflow-hidden p-0 bg-white rounded-md shadow-lg">
+              <Calendar
+                mode="single"
+                selected={date}
+                captionLayout="dropdown"
+                month={month}
+                onMonthChange={setMonth}
+                onSelect={(d) => {
+                  setDate(d)
+                  setValue(formatDate(d))
+                  onChange(d)
+                  setOpen(false)
+                }}
+              />
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  )
 }

@@ -141,7 +141,7 @@ export default function CreateProjectForm({
                     <FormControl>
                       <Input
                         placeholder="Website Redesign"
-                        className="h-[48px]!"
+                        className="h-12!"
                         {...field}
                       />
                     </FormControl>
@@ -177,7 +177,7 @@ export default function CreateProjectForm({
 
             <Button
               disabled={isPending}
-              className="flex place-self-end  h-[40px] text-white font-semibold"
+              className="flex place-self-end  h-10 text-white font-semibold"
               type="submit"
             >
               {isPending && <Loader className="animate-spin" />}
