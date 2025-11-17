@@ -1,5 +1,5 @@
 import "dotenv/config";
-import express, { NextFunction, Request, Response } from "express";
+import express, { Request, Response } from "express";
 import cors from "cors";
 import session from "cookie-session";
 import { config } from "./config/app.config";
@@ -19,6 +19,10 @@ import workspaceRoutes from "./routes/workspace.route";
 import memberRoutes from "./routes/member.route";
 import projectRoutes from "./routes/project.route";
 import taskRoutes from "./routes/task.route";
+import compression from "compression";
+import helmet from "helmet";
+import limiter from "./utils/express-rate-limit";
+import { logger } from "./lib/winston";
 
 const app = express();
 const BASE_PATH = config.BASE_PATH;
@@ -26,6 +30,8 @@ const BASE_PATH = config.BASE_PATH;
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
+app.use(compression({ threshold: 1024 }));
+app.use(helmet());
 
 app.use(
   session({
@@ -48,11 +54,17 @@ app.use(
   })
 );
 
+app.use(limiter);
+
 app.get(
   `/`,
   asyncHandler(async (_req: Request, res: Response) => {
     return res.status(HTTPSTATUS.OK).json({
       message: "👽 Probe API is running...",
+      status: HTTPSTATUS.OK,
+      version: "1.0.0",
+      documentation: "https://github.com/Probe-AI/probe-api",
+      timestamp: new Date().toISOString(),
     });
   })
 );
@@ -67,6 +79,7 @@ app.use(`${BASE_PATH}/task`, isAuthenticated, taskRoutes);
 app.use(errorHandler);
 
 app.listen(config.PORT, async () => {
-  console.log(`Server listening on port ${config.PORT} in ${config.NODE_ENV}`);
+  logger.info(`http://localhost:${config.PORT}${BASE_PATH}`);
+  logger.info(`Server listening on port ${config.PORT} in ${config.NODE_ENV}`);
   await connectDatabase();
 });

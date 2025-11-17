@@ -11,6 +11,7 @@ import {
 } from "../utils/appError";
 import MemberModel from "../models/member.model";
 import { ProviderEnum } from "../enums/account-provider.enum";
+import { logger } from "../lib/winston";
 
 export const loginOrCreateAccountService = async (data: {
   provider: string;
@@ -25,7 +26,7 @@ export const loginOrCreateAccountService = async (data: {
 
   try {
     session.startTransaction();
-    console.log("Started Session...");
+    logger.info("Started Session...");
 
     let user = await UserModel.findOne({ email }).session(session);
 
@@ -74,7 +75,7 @@ export const loginOrCreateAccountService = async (data: {
     }
     await session.commitTransaction();
     session.endSession();
-    console.log("End Session...");
+    logger.info("End Session...");
 
     return { user };
   } catch (error) {
@@ -145,7 +146,7 @@ export const registerUserService = async (body: {
 
     await session.commitTransaction();
     session.endSession();
-    console.log("End Session...");
+    logger.info("End Session...");
 
     return {
       userId: user._id,

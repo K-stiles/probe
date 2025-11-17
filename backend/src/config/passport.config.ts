@@ -10,6 +10,7 @@ import {
   loginOrCreateAccountService,
   verifyUserService,
 } from "../services/auth.service";
+import { logger } from "../lib/winston";
 
 passport.use(
   new GoogleStrategy(
@@ -23,8 +24,8 @@ passport.use(
     async (req: Request, accessToken, refreshToken, profile, done) => {
       try {
         const { email, sub: googleId, picture } = profile._json;
-        console.log(profile, "profile");
-        console.log(googleId, "googleId");
+        logger.info("profile",profile);
+        logger.info("googleId",googleId);
         if (!googleId) {
           throw new NotFoundException("Google ID (sub) is missing");
         }
