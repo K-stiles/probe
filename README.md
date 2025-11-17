@@ -4,6 +4,8 @@
 
 Probe is a comprehensive project management solution designed for modern teams. Streamline your workflow with intuitive task management, role-based permissions, and collaborative workspaces - all in one powerful platform.
 
+![Probe Dashboard](/probe.png)
+
 ---
 
 ## 📋 Table of Contents
@@ -303,15 +305,6 @@ probe-advanced-b2b-teams-project-management-saas/
 
 ---
 
-## 🤝 Contributing
-
-We welcome contributions to Probe! Please follow these steps:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
 
 ### **Development Guidelines**
 
@@ -321,11 +314,6 @@ We welcome contributions to Probe! Please follow these steps:
 - Update documentation as needed
 - Follow the existing code style
 
----
-
-## 📄 License
-
-This project is licensed under the ISC License. See the [LICENSE](LICENSE) file for details.
 
 ---
 
