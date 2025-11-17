@@ -1,4 +1,5 @@
 # 🚀 Probe
+![Probe Dashboard](/client/public/probe.svg) 
 
 **Advanced B2B Teams Project Management SaaS Platform**
 
