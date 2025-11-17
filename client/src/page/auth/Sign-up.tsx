@@ -34,7 +34,7 @@ const SignUp = () => {
     mutationFn: registerMutationFn,
   });
   const formSchema = z.object({
-    name: z.string().trim().min(1, {
+    name: z.string({required_error:"Name is required"}).trim().min(1, {
       message: "Name is required",
     }),
     email: z.string().trim().email("Invalid email address").min(1, {
@@ -61,7 +61,6 @@ const SignUp = () => {
         navigate("/");
       },
       onError: (error) => {
-        console.log(error);
         toast({
           title: "Error",
           description: error.message,

@@ -37,9 +37,13 @@ const SignIn = () => {
   });
 
   const formSchema = z.object({
-    email: z.string().trim().email("Invalid email address").min(1, {
-      message: "Workspace name is required",
-    }),
+    email: z
+      .string({ required_error: "Email is required" })
+      .trim()
+      .email("Invalid email address")
+      .min(1, {
+        message: "Email is required",
+      }),
     password: z.string().trim().min(1, {
       message: "Password is required",
     }),
@@ -57,9 +61,8 @@ const SignIn = () => {
     if (isPending) return;
 
     mutate(values, {
-      onSuccess: (data) => {
-        const user = data.user;
-        console.log(user);
+      onSuccess: (response) => {
+        const user = response.user;
         const decodedUrl = returnUrl ? decodeURIComponent(returnUrl) : null;
         navigate(decodedUrl || `/workspace/${user.currentWorkspace}`);
       },

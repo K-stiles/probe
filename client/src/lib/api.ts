@@ -25,17 +25,28 @@ import {
   WorkspaceByIdResponseType,
   EditWorkspaceType,
 } from "@/types/api.type";
+import { handleApiError } from "./api-error-handler";
 
 export const loginMutationFn = async (
   data: loginType
 ): Promise<LoginResponseType> => {
-  const response = await API.post("/auth/login", data);
-  return response.data;
+  try {
+    const response = await API.post("/auth/login", data);
+    return response.data;
+  } catch (e) {
+    const apiError = handleApiError(e);
+    throw new Error(apiError.message);
+  }
 };
 
-export const registerMutationFn = async (data: registerType) =>
-  await API.post("/auth/register", data);
-
+export const registerMutationFn = async (data: registerType) => {
+  try {
+    await API.post("/auth/register", data);
+  } catch (e) {
+    const apiError = handleApiError(e);
+    throw new Error(apiError.message);
+  }
+};
 export const logoutMutationFn = async () => await API.post("/auth/logout");
 
 export const getCurrentUserQueryFn =
@@ -205,13 +216,12 @@ export const createTaskMutationFn = async ({
   return response.data;
 };
 
-
 export const editTaskMutationFn = async ({
   taskId,
   projectId,
   workspaceId,
   data,
-}: EditTaskPayloadType): Promise<{message: string;}> => {
+}: EditTaskPayloadType): Promise<{ message: string }> => {
   const response = await API.put(
     `/task/${taskId}/project/${projectId}/workspace/${workspaceId}/update/`,
     data

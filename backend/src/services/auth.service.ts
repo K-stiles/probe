@@ -97,6 +97,7 @@ export const registerUserService = async (body: {
 
   try {
     session.startTransaction();
+    logger.info("Started Session...");
 
     const existingUser = await UserModel.findOne({ email }).session(session);
     if (existingUser) {
@@ -109,6 +110,7 @@ export const registerUserService = async (body: {
       password,
     });
     await user.save({ session });
+    logger.info("User created ...");
 
     const account = new AccountModel({
       userId: user._id,
@@ -116,14 +118,16 @@ export const registerUserService = async (body: {
       providerId: email,
     });
     await account.save({ session });
+    logger.info("User account created ...");
 
-    // 3. Create a new workspace for the new user
+    // 3. Create a fresh and empty workspace for the new user
     const workspace = new WorkspaceModel({
       name: `My Workspace`,
       description: `Workspace created for ${user.name}`,
       owner: user._id,
     });
     await workspace.save({ session });
+    logger.info("Fresh Empty Workspace created for the user ...");
 
     const ownerRole = await RoleModel.findOne({
       name: Roles.OWNER,
@@ -140,13 +144,15 @@ export const registerUserService = async (body: {
       joinedAt: new Date(),
     });
     await member.save({ session });
+    logger.info("User assigned as member to the workspace ...");
 
     user.currentWorkspace = workspace._id as mongoose.Types.ObjectId;
     await user.save({ session });
+    logger.info("User current workspace has been set to the new workspace ...");
 
     await session.commitTransaction();
     session.endSession();
-    logger.info("End Session...");
+    logger.info("Session transaction committed and ended...");
 
     return {
       userId: user._id,
@@ -156,6 +162,7 @@ export const registerUserService = async (body: {
     await session.abortTransaction();
     session.endSession();
 
+    logger.error("Error in registerUserService:", error);
     throw error;
   }
 };

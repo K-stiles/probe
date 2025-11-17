@@ -1,5 +1,5 @@
 import UserModel from "../models/user.model";
-import { BadRequestException } from "../utils/appError";
+import { NotFoundException } from "../utils/appError";
 
 export const getCurrentUserService = async (userId: string) => {
   const user = await UserModel.findById(userId)
@@ -7,10 +7,8 @@ export const getCurrentUserService = async (userId: string) => {
     .select("-password");
 
   if (!user) {
-    throw new BadRequestException("User not found");
+    throw new NotFoundException("User not found");
   }
 
-  return {
-    user,
-  };
+  return { user };
 };
