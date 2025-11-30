@@ -3,7 +3,7 @@ import { asyncHandler } from "../middlewares/asyncHandler.middleware";
 import { config } from "../config/app.config";
 import { loginSchema, registerSchema } from "../validation/auth.validation";
 import { HTTPSTATUS } from "../config/http.config";
-import {  registerUserService} from "../services/auth.service";
+import { registerUserService } from "../services/auth.service";
 import passport from "passport";
 import { logger } from "../lib/winston";
 
@@ -47,17 +47,25 @@ export const loginController = asyncHandler(
         user: Express.User | false,
         info: { message: string } | undefined
       ) => {
-        if (err) return next(err);
+        if (err) {
+          logger.error("Authentication error:", err);
+          return next(err);
+        }
 
         if (!user) {
+          logger.warn("Login failed:", info?.message || "Invalid credentials");
           return res.status(HTTPSTATUS.UNAUTHORIZED).json({
             message: info?.message || "Invalid email or password",
           });
         }
 
         req.logIn(user, (err) => {
-          if (err) return next(err);
+          if (err) {
+            logger.error("Login session error:", err);
+            return next(err);
+          }
 
+          logger.info("User logged in successfully:", user.email);
           return res.status(HTTPSTATUS.OK).json({
             message: "Logged in successfully",
             user,

@@ -6,11 +6,22 @@ export interface ApiError {
   code?: string;
 }
 
-// Error handler utility
-export const handleApiError = (error: unknown): ApiError => {
-  if (axios.isAxiosError(error)) {
-    const axiosError = error as AxiosError;
+const checkAxiosErrorName = (error: unknown): boolean => {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "name" in error &&
+    (error as { name?: unknown }).name === "AxiosError"
+  );
+};
 
+export const handleApiError = (error: unknown): ApiError => {
+  const isAxiosError = axios.isAxiosError(error)
+    ? (error as AxiosError)
+    : checkAxiosErrorName(error);
+
+  if (isAxiosError) {
+    const axiosError = error as AxiosError;
     if (axiosError.response) {
       // Server responded with error status
       const { status, data } = axiosError.response as {
@@ -22,38 +33,36 @@ export const handleApiError = (error: unknown): ApiError => {
         message: data?.message || data?.error || "An error occurred",
         status,
         code: data?.code,
-        // field: data?.field,
+      };
+    } else if (checkAxiosErrorName(error)) {
+      return {
+        message: (error as AxiosError).message || "Request failed",
+        status: 0,
+        code: "REQUEST_ERROR",
       };
     } else if (axiosError.request) {
       // Request made but no response received
       return {
         message: "Network error - please check your connection",
-        status: 524, // 524 A Timeout Occurred
+        status: 0,
         code: "NETWORK_ERROR",
       };
-    } else {
-      // Something else happened
+    }
+
+    if (error instanceof Error) {
+      // Non-axios error but still an Error instance
       return {
-        message: axiosError.message || "Request failed",
+        message: error.message,
         status: 500,
         code: "REQUEST_ERROR",
       };
     }
   }
 
-  if (error instanceof Error) {
-    // Non-axios error but still an Error instance
-    return {
-      message: error.message,
-      status: 500,
-      code: "UNKNOWN_ERROR",
-    };
-  }
-
   // Non-axios error
   return {
     message: "An unexpected error occurred",
-    status: 500,
+    status: 0,
     code: "UNKNOWN_ERROR",
   };
 };

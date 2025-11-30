@@ -16,18 +16,35 @@ API.interceptors.response.use(
     return response;
   },
   async (error) => {
-    const { data, status } = error.response;
+    if (error.response) {
+      const { data, status } = error.response;
 
-    if (data === "Unauthorized" && status === 401) {
-      window.location.href = "/";
+      // Don't redirect on 401 for API calls, let React Query handle it
+      // Only redirect if we're not already on an auth page
+      if (
+        status === 401 &&
+        !window.location.pathname.match(
+          /^\/(sign-in|sign-up|google\/oauth\/callback)?$/
+        )
+      ) {
+        // Clear any cached auth state
+        localStorage.clear();
+        sessionStorage.clear();
+        // Use history API instead of window.location to avoid page reload
+        window.history.pushState({}, "", "/");
+      }
+
+      const customError: CustomError = {
+        ...error,
+        errorCode: data?.errorCode || "UNKNOWN_ERROR",
+        message: data?.message || error.message,
+      };
+
+      return Promise.reject(customError);
     }
 
-    const customError: CustomError = {
-      ...error,
-      errorCode: data?.errorCode || "UNKNOWN_ERROR",
-    };
-
-    return Promise.reject(customError);
+    // Network error or other issues
+    return Promise.reject(error);
   }
 );
 

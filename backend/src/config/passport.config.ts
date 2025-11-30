@@ -12,6 +12,7 @@ import {
 } from "../services/auth.service";
 import { logger } from "../lib/winston";
 
+// Google OAuth Strategy
 passport.use(
   new GoogleStrategy(
     {
@@ -24,8 +25,8 @@ passport.use(
     async (req: Request, accessToken, refreshToken, profile, done) => {
       try {
         const { email, sub: googleId, picture } = profile._json;
-        logger.info("profile",profile);
-        logger.info("googleId",googleId);
+        logger.info("profile", profile);
+        logger.info("googleId", googleId);
         if (!googleId) {
           throw new NotFoundException("Google ID (sub) is missing");
         }
@@ -45,6 +46,7 @@ passport.use(
   )
 );
 
+//  Local Strategy - for Login
 passport.use(
   new LocalStrategy(
     {
@@ -57,7 +59,7 @@ passport.use(
         const user = await verifyUserLoginService({ email, password });
         return done(null, user);
       } catch (error: any) {
-        return done(error, false, { message: error?.message });
+        return done(null, false, { message: error?.message });
       }
     }
   )

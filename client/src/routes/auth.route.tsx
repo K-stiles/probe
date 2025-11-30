@@ -5,16 +5,28 @@ import { isAuthRoute } from "./common/routePaths";
 
 const AuthRoute = () => {
   const location = useLocation();
-  const { data: authData, isLoading } = useAuth();
+  const { data: authData, isLoading, error } = useAuth();
   const user = authData?.user;
 
   const _isAuthRoute = isAuthRoute(location.pathname);
 
-  if (isLoading && !_isAuthRoute) return <DashboardSkeleton />;
+  // Show loading only for non-auth routes and when actually loading
+  if (isLoading && !_isAuthRoute && !error) {
+    return <DashboardSkeleton />;
+  }
 
-  if (!user) return <Outlet />;
+  // If no user (either due to error or not authenticated), show auth pages
+  if (!user || error) {
+    return <Outlet />;
+  }
 
-  return <Navigate to={`workspace/${user.currentWorkspace?._id}`} replace />;
+  // If user exists and has workspace, redirect to workspace
+  if (user.currentWorkspace?._id) {
+    return <Navigate to={`workspace/${user.currentWorkspace._id}`} replace />;
+  }
+
+  // If user exists but no workspace, show auth pages (shouldn't happen but safety)
+  return <Outlet />;
 };
 
 export default AuthRoute;
