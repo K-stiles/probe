@@ -8,7 +8,7 @@ import { NotFoundException } from "../utils/appError";
 import { ProviderEnum } from "../enums/account-provider.enum";
 import {
   loginOrCreateAccountService,
-  verifyUserService,
+  verifyUserLoginService,
 } from "../services/auth.service";
 import { logger } from "../lib/winston";
 
@@ -54,7 +54,7 @@ passport.use(
     },
     async (email, password, done) => {
       try {
-        const user = await verifyUserService({ email, password });
+        const user = await verifyUserLoginService({ email, password });
         return done(null, user);
       } catch (error: any) {
         return done(error, false, { message: error?.message });

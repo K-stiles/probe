@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { asyncHandler } from "../middlewares/asyncHandler.middleware";
 import { config } from "../config/app.config";
-import { registerSchema } from "../validation/auth.validation";
+import { loginSchema, registerSchema } from "../validation/auth.validation";
 import { HTTPSTATUS } from "../config/http.config";
-import { registerUserService } from "../services/auth.service";
+import {  registerUserService} from "../services/auth.service";
 import passport from "passport";
 import { logger } from "../lib/winston";
 
@@ -47,9 +47,7 @@ export const loginController = asyncHandler(
         user: Express.User | false,
         info: { message: string } | undefined
       ) => {
-        if (err) {
-          return next(err);
-        }
+        if (err) return next(err);
 
         if (!user) {
           return res.status(HTTPSTATUS.UNAUTHORIZED).json({
@@ -58,9 +56,7 @@ export const loginController = asyncHandler(
         }
 
         req.logIn(user, (err) => {
-          if (err) {
-            return next(err);
-          }
+          if (err) return next(err);
 
           return res.status(HTTPSTATUS.OK).json({
             message: "Logged in successfully",

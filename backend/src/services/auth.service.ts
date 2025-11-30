@@ -99,11 +99,13 @@ export const registerUserService = async (body: {
     session.startTransaction();
     logger.info("Started Session...");
 
+    // 1. Check if user already exists
     const existingUser = await UserModel.findOne({ email }).session(session);
     if (existingUser) {
-      throw new BadRequestException("Email already exists");
+      throw new BadRequestException("User already exists. Please login instead.");
     }
 
+    // 2.a. Prepare and create the user in the database
     const user = new UserModel({
       email,
       name,
@@ -112,6 +114,7 @@ export const registerUserService = async (body: {
     await user.save({ session });
     logger.info("User created ...");
 
+    // 2.b. Create a Provider Account and associate with the user
     const account = new AccountModel({
       userId: user._id,
       provider: ProviderEnum.EMAIL,
@@ -129,6 +132,7 @@ export const registerUserService = async (body: {
     await workspace.save({ session });
     logger.info("Fresh Empty Workspace created for the user ...");
 
+    // 4.a. find the Owner Role from Roles collection
     const ownerRole = await RoleModel.findOne({
       name: Roles.OWNER,
     }).session(session);
@@ -137,6 +141,8 @@ export const registerUserService = async (body: {
       throw new NotFoundException("Owner role not found");
     }
 
+    // 4.b. Make the newly created user as Member of the newly created workspace by assigning him the Owner Role
+    // expound: Assign the Owner Role to the newly created User, making him a member of the newly created workspace
     const member = new MemberModel({
       userId: user._id,
       workspaceId: workspace._id,
@@ -146,6 +152,7 @@ export const registerUserService = async (body: {
     await member.save({ session });
     logger.info("User assigned as member to the workspace ...");
 
+      // 5. Set the currentWorkspace field of the user to the newly created workspace
     user.currentWorkspace = workspace._id as mongoose.Types.ObjectId;
     await user.save({ session });
     logger.info("User current workspace has been set to the new workspace ...");
@@ -167,7 +174,7 @@ export const registerUserService = async (body: {
   }
 };
 
-export const verifyUserService = async ({
+export const verifyUserLoginService = async ({
   email,
   password,
   provider = ProviderEnum.EMAIL,
