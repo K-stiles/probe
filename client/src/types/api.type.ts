@@ -1,7 +1,7 @@
 import {
-  PermissionType,
-  TaskPriorityEnumType,
-  TaskStatusEnumType,
+  type PermissionType,
+  type TaskPriorityEnumType,
+  type TaskStatusEnumType,
 } from "@/constant";
 
 export type loginType = { email: string; password: string };

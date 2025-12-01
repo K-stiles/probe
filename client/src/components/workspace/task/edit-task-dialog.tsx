@@ -1,6 +1,6 @@
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import EditTaskForm from "./edit-task-form";
-import { TaskType } from "@/types/api.type";
+import { type TaskType } from "@/types/api.type";
 
 const EditTaskDialog = ({ task, isOpen, onClose }: { task: TaskType; isOpen: boolean; onClose: () => void }) => {
   return (

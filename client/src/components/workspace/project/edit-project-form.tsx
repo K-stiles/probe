@@ -19,7 +19,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "../../ui/textarea";
 import EmojiPickerComponent from "@/components/emoji-picker";
-import { ProjectType } from "@/types/api.type";
+import { type ProjectType } from "@/types/api.type";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useWorkspaceId from "@/hooks/use-workspace-id";
 import { editProjectMutationFn } from "@/lib/api";
@@ -59,6 +59,7 @@ export default function EditProjectForm(props: {
 
   useEffect(() => {
     if (project) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setEmoji(project.emoji);
       form.setValue("name", project.name);
       form.setValue("description", project.description);
@@ -148,7 +149,7 @@ export default function EditProjectForm(props: {
                       Project title
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder="" className="h-[48px]!" {...field} />
+                      <Input placeholder="" className="h-12!" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -182,7 +183,7 @@ export default function EditProjectForm(props: {
 
             <Button
               disabled={isPending}
-              className="flex place-self-end  h-[40px] text-white font-semibold"
+              className="flex place-self-end  h-10 text-white font-semibold"
               type="submit"
             >
               {isPending && <Loader className="animate-spin" />}

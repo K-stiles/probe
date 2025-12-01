@@ -8,7 +8,7 @@ import {
   getAvatarFallbackText,
   transformStatusEnum,
 } from "@/lib/helper";
-import { TaskType } from "@/types/api.type";
+import { type TaskType } from "@/types/api.type";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { Loader } from "lucide-react";
@@ -32,7 +32,7 @@ const RecentTasks = () => {
     <div className="flex flex-col space-y-6">
       {isLoading ? (
         <Loader
-          className="w-8 h-8 
+          className="w-8 h-8
         animate-spin
         place-self-center flex
         "

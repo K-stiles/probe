@@ -33,7 +33,7 @@ import useGetWorkspaceMembers from "@/hooks/api/use-get-workspace-members";
 import { editTaskMutationFn } from "@/lib/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
-import { TaskType } from "@/types/api.type";
+import { type TaskType } from "@/types/api.type";
 
 export default function EditTaskForm({ task, onClose }: { task: TaskType; onClose: () => void }) {
   const queryClient = useQueryClient();
@@ -69,7 +69,8 @@ export default function EditTaskForm({ task, onClose }: { task: TaskType; onClos
     status: z.enum(Object.values(TaskStatusEnum) as [keyof typeof TaskStatusEnum]),
     priority: z.enum(Object.values(TaskPriorityEnum) as [keyof typeof TaskPriorityEnum]),
     assignedTo: z.string().trim().min(1, { message: "AssignedTo is required" }),
-    dueDate: z.date({ required_error: "A due date is required." }),
+    dueDate: z.date({ message: "A due date is required." }),
+    // dueDate: z.date().refine((val) => !!val, { message: "A due date is required." }),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -148,7 +149,7 @@ export default function EditTaskForm({ task, onClose }: { task: TaskType; onClos
               <FormItem>
                 <FormLabel>Assigned To</FormLabel>
                 <Select onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
-                  <FormControl><SelectTrigger><SelectValue placeholder="Select an assignee" /></SelectTrigger></FormControl>
+                  <FormControl><SelectTrigger className="w-full"><SelectValue placeholder="Select an assignee" /></SelectTrigger></FormControl>
                   <SelectContent>
                   <div className="w-full max-h-[200px] overflow-y-auto scrollbar">
                     {membersOptions.map((option) => (
@@ -187,7 +188,7 @@ export default function EditTaskForm({ task, onClose }: { task: TaskType; onClos
               <FormItem>
                 <FormLabel>Status</FormLabel>
                 <Select onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
-                  <FormControl><SelectTrigger><SelectValue placeholder="Select status" /></SelectTrigger></FormControl>
+                  <FormControl><SelectTrigger className="w-full"><SelectValue placeholder="Select status" /></SelectTrigger></FormControl>
                   <SelectContent>
                     {statusOptions.map((status) => (
                       <SelectItem key={status.value} value={status.value}>{status.label}</SelectItem>
@@ -203,7 +204,7 @@ export default function EditTaskForm({ task, onClose }: { task: TaskType; onClos
               <FormItem>
                 <FormLabel>Priority</FormLabel>
                 <Select onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
-                  <FormControl><SelectTrigger><SelectValue placeholder="Select priority" /></SelectTrigger></FormControl>
+                  <FormControl><SelectTrigger className="w-full"><SelectValue placeholder="Select priority" /></SelectTrigger></FormControl>
                   <SelectContent>
                     {priorityOptions.map((priority) => (
                       <SelectItem key={priority.value} value={priority.value}>{priority.label}</SelectItem>

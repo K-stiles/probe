@@ -1,5 +1,5 @@
-import { PermissionType } from "@/constant";
-import { UserType, WorkspaceWithMembersType } from "@/types/api.type";
+import { type PermissionType } from "@/constant";
+import { type UserType, type WorkspaceWithMembersType } from "@/types/api.type";
 import { useEffect, useMemo, useState } from "react";
 
 const usePermissions = (
@@ -14,6 +14,7 @@ const usePermissions = (
         (member) => member.userId === user._id
       );
       if (member) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setPermissions(member.role.permissions || []);
       }
     }

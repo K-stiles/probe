@@ -1,5 +1,5 @@
 import React from "react";
-import { PermissionType } from "@/constant";
+import { type PermissionType } from "@/constant";
 import { useAuthContext } from "@/context/auth-provider";
 
 type PermissionsGuardProps = {
@@ -19,7 +19,7 @@ const PermissionsGuard: React.FC<PermissionsGuardProps> = ({
     return (
       showMessage && (
         <div
-          className="text-center 
+          className="text-center
         text-sm pt-3
         italic
         w-full

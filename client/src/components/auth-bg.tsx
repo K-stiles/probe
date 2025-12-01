@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 export const BgPattern = ({children}:{children: ReactNode}) => (
 <div className="min-h-screen w-full bg-[#fff7ed] relative">

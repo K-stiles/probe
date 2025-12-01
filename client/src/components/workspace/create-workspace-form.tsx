@@ -98,7 +98,7 @@ export default function CreateWorkspaceForm({
                     <FormControl>
                       <Input
                         placeholder="Taco's Co."
-                        className="h-[48px]!"
+                        className="h-12!"
                         {...field}
                       />
                     </FormControl>
@@ -141,7 +141,7 @@ export default function CreateWorkspaceForm({
 
             <Button
               disabled={isPending}
-              className="w-full h-[40px] text-white font-semibold"
+              className="w-full h-10 text-white font-semibold"
               type="submit"
             >
               {isPending && <Loader className="animate-spin" />}

@@ -101,23 +101,28 @@ export default function CreateTaskForm(props: {
     projectId: z.string().trim().min(1, {
       message: "Project is required",
     }),
-    status: z.enum(
-      Object.values(TaskStatusEnum) as [keyof typeof TaskStatusEnum],
-      {
-        required_error: "Status is required",
-      }
-    ),
+      status: z.enum(
+      Object.values(TaskStatusEnum) as [typeof TaskStatusEnum[keyof typeof TaskStatusEnum]]
+    , {
+      message: "Status is required"
+    }),
     priority: z.enum(
-      Object.values(TaskPriorityEnum) as [keyof typeof TaskPriorityEnum],
-      {
-        required_error: "Priority is required",
-      }
-    ),
+      Object.values(TaskPriorityEnum) as [typeof TaskPriorityEnum[keyof typeof TaskPriorityEnum]]
+    , {
+      message: "Priority is required"
+    }),
+    // status: z.enum(Object.values(TaskStatusEnum) as [keyof typeof TaskStatusEnum], {
+    //     required_error: "Status is required",
+    //   }),
+    // priority: z.enum(Object.values(TaskPriorityEnum) as [keyof typeof TaskPriorityEnum],{
+    //     required_error: "Priority is required",
+    //   }),
     assignedTo: z.string().trim().min(1, {
       message: "AssignedTo is required",
     }),
     dueDate: z.date({
-      required_error: "A date of birth is required.",
+      message: "A date of birth is required.",
+      // required_error: "A date of birth is required.",
     }),
   });
 
@@ -249,7 +254,7 @@ export default function CreateTaskForm(props: {
                         defaultValue={field.value}
                       >
                         <FormControl>
-                          <SelectTrigger>
+                          <SelectTrigger className="w-full">
                             <SelectValue placeholder="Select a project" />
                           </SelectTrigger>
                         </FormControl>
@@ -297,7 +302,7 @@ export default function CreateTaskForm(props: {
                       defaultValue={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger className="w-full">
                           <SelectValue placeholder="Select a assignee" />
                         </SelectTrigger>
                       </FormControl>
@@ -354,7 +359,7 @@ export default function CreateTaskForm(props: {
                       defaultValue={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger className="w-full">
                           <SelectValue
                             className="text-muted-foreground! capitalize!"
                             placeholder="Select a status"
@@ -392,7 +397,7 @@ export default function CreateTaskForm(props: {
                       defaultValue={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger className="w-full">
                           <SelectValue placeholder="Select a priority" />
                         </SelectTrigger>
                       </FormControl>

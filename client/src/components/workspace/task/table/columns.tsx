@@ -1,4 +1,4 @@
-import { Column, ColumnDef, Row } from "@tanstack/react-table";
+import type{ Column, ColumnDef, Row } from "@tanstack/react-table";
 import { format } from "date-fns";
 
 import { DataTableColumnHeader } from "./table-column-header";
@@ -7,9 +7,9 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import {
   TaskPriorityEnum,
-  TaskPriorityEnumType,
+  type TaskPriorityEnumType,
   TaskStatusEnum,
-  TaskStatusEnumType,
+  type TaskStatusEnumType,
 } from "@/constant";
 import {
   formatStatusToEnum,
@@ -17,7 +17,7 @@ import {
   getAvatarFallbackText,
 } from "@/lib/helper";
 import { priorities, statuses } from "./data";
-import { TaskType } from "@/types/api.type";
+import { type TaskType } from "@/types/api.type";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export const getColumns = (projectId?: string): ColumnDef<TaskType>[] => {
@@ -32,7 +32,7 @@ export const getColumns = (projectId?: string): ColumnDef<TaskType>[] => {
           }
           onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
           aria-label="Select all"
-          className="translate-y-[2px]"
+          className="translate-y-0.5"
         />
       ),
       cell: ({ row }) => (
@@ -40,7 +40,7 @@ export const getColumns = (projectId?: string): ColumnDef<TaskType>[] => {
           checked={row.getIsSelected()}
           onCheckedChange={(value) => row.toggleSelected(!!value)}
           aria-label="Select row"
-          className="translate-y-[2px]"
+          className="translate-y-0.5"
         />
       ),
       enableSorting: false,

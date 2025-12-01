@@ -1,8 +1,8 @@
 import {
   TaskPriorityEnum,
-  TaskPriorityEnumType,
+  type TaskPriorityEnumType,
   TaskStatusEnum,
-  TaskStatusEnumType,
+  type TaskStatusEnumType,
 } from "@/constant";
 import { parseAsString, parseAsStringEnum, useQueryStates } from "nuqs";
 

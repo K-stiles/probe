@@ -48,7 +48,7 @@ const EmojiPickerComponent: React.FC<EmojiPickerComponentProps> = ({
         maxFrequentRows={0}
         //emojiButtonSize={30}
         emojiButtonColors={["rgba(102, 51, 153, .2)"]}
-        className=" h-[40px]"
+        className=" h-10"
       />
     </div>
   );
