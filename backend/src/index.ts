@@ -23,8 +23,14 @@ import projectRoutes from "./routes/project.route";
 import taskRoutes from "./routes/task.route";
 import { logger } from "./lib/winston";
 import limiter from "./utils/express-rate-limit";
+import mongoose from "mongoose";
+import { verifyUser } from "./middlewares/verifyToken";
 // import { BadRequestException } from "./utils/appError";
 // import { ErrorCodeEnum } from "./enums/error-code.enum";
+
+mongoose.connection.on("disconnected", () => {
+  console.log("mongoDB disconnected!");
+});
 
 const app = express();
 const BASE_PATH = config.BASE_PATH;
@@ -70,11 +76,12 @@ app.get(
   })
 );
 app.use(`${BASE_PATH}/auth`, authRoutes);
-app.use(`${BASE_PATH}/user`, isAuthenticated, userRoutes);
-app.use(`${BASE_PATH}/workspace`, isAuthenticated, workspaceRoutes);
-app.use(`${BASE_PATH}/member`, isAuthenticated, memberRoutes);
-app.use(`${BASE_PATH}/project`, isAuthenticated, projectRoutes);
-app.use(`${BASE_PATH}/task`, isAuthenticated, taskRoutes);
+app.use(`${BASE_PATH}/user`, verifyUser, userRoutes);
+// app.use(`${BASE_PATH}/user`, verifyUser,isAuthenticated, userRoutes);
+app.use(`${BASE_PATH}/workspace`, verifyUser, workspaceRoutes);
+app.use(`${BASE_PATH}/member`, verifyUser, memberRoutes);
+app.use(`${BASE_PATH}/project`, verifyUser, projectRoutes);
+app.use(`${BASE_PATH}/task`, verifyUser, taskRoutes);
 
 app.use(errorHandler);
 

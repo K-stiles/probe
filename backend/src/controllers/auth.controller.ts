@@ -81,6 +81,9 @@ export const logOutController = asyncHandler(
     req.logout((err) => {
       if (err) {
         return res
+          .clearCookie("access_token", {
+            httpOnly: true,
+          })
           .status(HTTPSTATUS.INTERNAL_SERVER_ERROR)
           .json({ error: "Failed to log out" });
       }
@@ -88,6 +91,9 @@ export const logOutController = asyncHandler(
 
     req.session = null;
     return res
+      .clearCookie("access_token", {
+        httpOnly: true,
+      })
       .status(HTTPSTATUS.OK)
       .json({ message: "Logged out successfully" });
   }

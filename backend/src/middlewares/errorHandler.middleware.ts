@@ -22,7 +22,14 @@ export const errorHandler: ErrorRequestHandler = (
   res,
   next
 ): any => {
-  console.error(`Error Occured on PATH: ${req.path} `, error);
+  console.error(
+    `Error Occured on PATH: ${req.path} - ${error.statusCode}`,
+    error
+  );
+  // if (req.path === "/api/user/current" && error.statusCode === 401) {
+  //   console.log("🔥🔥🔥🔥🔥🔥 Handling 401 error for /api/user/current");
+  //   return res.sendStatus(204)
+  // }
 
   if (error instanceof SyntaxError) {
     return res.status(HTTPSTATUS.BAD_REQUEST).json({

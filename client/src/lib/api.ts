@@ -51,8 +51,13 @@ export const logoutMutationFn = async () => await API.post("/auth/logout");
 
 export const getCurrentUserQueryFn =
   async (): Promise<CurrentUserResponseType> => {
-    const response = await API.get(`/user/current`);
-    return response.data;
+    try {
+      const response = await API.get(`/user/current`);
+      return response.data;
+    } catch (e) {
+      const apiError = handleApiError(e);
+      throw new Error(apiError.message);
+    }
   };
 
 //********* WORKSPACE ****************

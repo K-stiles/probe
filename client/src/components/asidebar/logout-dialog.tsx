@@ -26,9 +26,13 @@ const LogoutDialog = (props: {
   const { mutate, isPending } = useMutation({
     mutationFn: logoutMutationFn,
     onSuccess: () => {
-      queryClient.resetQueries({
+      // queryClient.resetQueries({
+      //   queryKey: ["authUser"],
+      // });
+      queryClient.invalidateQueries({
         queryKey: ["authUser"],
       });
+      queryClient.clear();
       navigate("/");
       setIsOpen(false);
     },
@@ -63,7 +67,7 @@ const LogoutDialog = (props: {
             <Button type="button" variant="outline" onClick={() => setIsOpen(false)}>
               Cancel
             </Button>
-             <Button disabled={isPending} variant="destructive" type="button" onClick={handleLogout}>
+            <Button disabled={isPending} variant="destructive" type="button" onClick={handleLogout}>
               {isPending && <Loader className="animate-spin" />}
               Sign out
             </Button>
