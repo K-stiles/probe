@@ -83,6 +83,8 @@ export const logOutController = asyncHandler(
         return res
           .clearCookie("access_token", {
             httpOnly: true,
+            secure: config.NODE_ENV !== "development",
+            sameSite: "lax",
           })
           .status(HTTPSTATUS.INTERNAL_SERVER_ERROR)
           .json({ error: "Failed to log out" });
@@ -93,6 +95,8 @@ export const logOutController = asyncHandler(
     return res
       .clearCookie("access_token", {
         httpOnly: true,
+        secure: config.NODE_ENV !== "development",
+        sameSite: "lax",
       })
       .status(HTTPSTATUS.OK)
       .json({ message: "Logged out successfully" });

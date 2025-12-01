@@ -19,6 +19,8 @@ export const loginUserController = asyncHandler(
     return res
       .cookie("access_token", access_token, {
         httpOnly: true,
+        secure: config.NODE_ENV !== "development",
+        sameSite: "lax",
       })
       .status(HTTPSTATUS.OK)
       .json({
