@@ -21,7 +21,7 @@ import {
 import { Input } from "@/components/ui/input";
 import Logo from "@/components/logo";
 import GoogleOauthButton from "@/components/auth/google-oauth-button";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { loginMutationFn } from "@/lib/api";
 import { toast } from "@/hooks/use-toast";
 import { Loader } from "lucide-react";
@@ -31,6 +31,8 @@ const SignIn = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const returnUrl = searchParams.get("returnUrl");
+
+  const queryClient = useQueryClient();
 
   const { mutate, isPending } = useMutation({
     mutationFn: loginMutationFn,
@@ -64,6 +66,7 @@ const SignIn = () => {
       onSuccess: (response) => {
         const user = response.user;
         const decodedUrl = returnUrl ? decodeURIComponent(returnUrl) : null;
+        queryClient.setQueryData(["authUser"], { user });
         navigate(decodedUrl || `/workspace/${user.currentWorkspace}`);
       },
       onError: (error) => {
