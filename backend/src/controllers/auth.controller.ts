@@ -6,6 +6,7 @@ import { HTTPSTATUS } from "../config/http.config";
 import { registerUserService } from "../services/auth.service";
 import passport from "passport";
 import { logger } from "../lib/winston";
+import { COOKIE_OPTIONS } from '../config/cookie.options';
 
 export const googleLoginCallback = asyncHandler(
   async (req: Request, res: Response) => {
@@ -82,9 +83,7 @@ export const logOutController = asyncHandler(
       if (err) {
         return res
           .clearCookie("access_token", {
-            httpOnly: true,
-            secure: config.NODE_ENV !== "development",
-            sameSite: "lax",
+            ...COOKIE_OPTIONS
           })
           .status(HTTPSTATUS.INTERNAL_SERVER_ERROR)
           .json({ error: "Failed to log out" });
@@ -94,9 +93,7 @@ export const logOutController = asyncHandler(
     req.session = null;
     return res
       .clearCookie("access_token", {
-        httpOnly: true,
-        secure: config.NODE_ENV !== "development",
-        sameSite: "lax",
+        ...COOKIE_OPTIONS
       })
       .status(HTTPSTATUS.OK)
       .json({ message: "Logged out successfully" });

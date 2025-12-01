@@ -5,6 +5,7 @@ import { HTTPSTATUS } from "../config/http.config";
 import { loginUserService } from "../services/authenticate.service";
 import jwt from "jsonwebtoken";
 import { config } from "../config/app.config";
+import { COOKIE_OPTIONS } from "../config/cookie.options";
 
 export const loginUserController = asyncHandler(
   async (req: Request, res: Response) => {
@@ -18,9 +19,10 @@ export const loginUserController = asyncHandler(
 
     return res
       .cookie("access_token", access_token, {
-        httpOnly: true,
-        secure: config.NODE_ENV !== "development",
-        sameSite: "lax",
+        ...COOKIE_OPTIONS
+        // httpOnly: true,
+        // secure: config.NODE_ENV === "production", // secure: true required for SameSite=None
+        // sameSite: "none", // <-- critically REQUIRED for cross-site cookies
       })
       .status(HTTPSTATUS.OK)
       .json({
